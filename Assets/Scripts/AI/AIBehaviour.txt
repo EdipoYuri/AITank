@@ -1,0 +1,50 @@
+tree("Root")
+	parallel
+		repeat mute tree("Patrol")
+
+tree("Patrol")
+	fallback
+		tree("Flee")
+		while not IsHealthLessThan(50.0)
+			fallback
+				tree("Attack")
+				tree("Wander")
+
+tree("Flee")
+	while IsHealthLessThan(50.0)
+		fallback
+			while not SeeEnemy
+				sequence
+					tree("Wander")
+			while SeeEnemy
+				fallback
+					while InDanger(15.0)
+						sequence
+							TakeCover
+							MoveDestination
+		
+tree("Wander")
+	while not SeeEnemy
+		sequence
+			StopFire
+			PickRandomDestination
+			MoveDestination
+
+
+tree("Attack")
+	while SeeEnemy
+		sequence
+			AlignTank
+			fallback
+				while DistanceToShoot(15.0)
+					sequence
+						while ShootLinedUp
+							sequence
+								Fire
+						while not ShootLinedUp
+							sequence
+								AlignTank
+						
+				while not DistanceToShoot(15.0)
+					sequence
+						GetDistance
