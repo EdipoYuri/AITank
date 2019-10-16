@@ -30,21 +30,14 @@ tree("Wander")
 			PickRandomDestination
 			MoveDestination
 
-
 tree("Attack")
 	while SeeEnemy
-		sequence
-			AlignTank
-			fallback
-				while DistanceToShoot(15.0)
-					sequence
-						while ShootLinedUp
-							sequence
-								Fire
-						while not ShootLinedUp
-							sequence
-								AlignTank
-						
-				while not DistanceToShoot(15.0)
-					sequence
-						GetDistance
+		parallel
+			repeat
+				sequence
+					AlignTank
+					Fire
+			repeat
+				sequence
+					GetDistance
+					Wait(0.1)
