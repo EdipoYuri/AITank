@@ -33,11 +33,8 @@ tree("Wander")
 tree("Attack")
 	while SeeEnemy
 		parallel
-			repeat
-				sequence
-					AlignTank
-					Fire
-			repeat
-				sequence
+			sequence
+				AlignTank
+				Fire
+				while not DistanceToShoot(15.0)
 					GetDistance
-					Wait(0.1)
