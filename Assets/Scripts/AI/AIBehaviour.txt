@@ -15,13 +15,14 @@ tree("Flee")
 		fallback
 			while not HasTargetInRange
 				sequence
-					tree("Wander")
+					TakeCover
+					MoveDestination
 			while HasTargetInRange
 				fallback
 					while InDanger(15.0)
 						sequence
-							TakeCover
-							MoveDestination
+							Fire
+							
 		
 tree("Wander")
 	while not HasTargetInRange
@@ -35,3 +36,4 @@ tree("Attack")
 		sequence
 			while not DistanceToShoot(15.0)
 				GetDistance
+			Fire
