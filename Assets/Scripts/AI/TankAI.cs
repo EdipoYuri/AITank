@@ -62,10 +62,6 @@ public class TankAI : MonoBehaviour
         {
             Rotate(-angle);
         }
-        else
-        {
-            Rotate(0.0f);
-        }
     }
 
     public void SelfDestruction()

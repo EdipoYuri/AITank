@@ -13,10 +13,10 @@ tree("Patrol")
 tree("Flee")
 	while IsHealthLessThan(50.0)
 		fallback
-			while not SeeEnemy
+			while not HasTargetInRange
 				sequence
 					tree("Wander")
-			while SeeEnemy
+			while HasTargetInRange
 				fallback
 					while InDanger(15.0)
 						sequence
@@ -24,17 +24,14 @@ tree("Flee")
 							MoveDestination
 		
 tree("Wander")
-	while not SeeEnemy
+	while not HasTargetInRange
 		sequence
 			StopFire
 			PickRandomDestination
 			MoveDestination
 
 tree("Attack")
-	while SeeEnemy
-		parallel
-			sequence
-				AlignTank
-				Fire
-				while not DistanceToShoot(15.0)
-					GetDistance
+	while HasTargetInRange
+		sequence
+			while not DistanceToShoot(15.0)
+				GetDistance

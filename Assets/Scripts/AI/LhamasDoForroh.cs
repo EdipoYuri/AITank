@@ -8,6 +8,7 @@ public class LhamasDoForroh : MonoBehaviour
 {
     private TankAI _tank;
     private float _minDistance;
+    Vector3 destination;
 
     private void Awake()
     {
@@ -17,15 +18,17 @@ public class LhamasDoForroh : MonoBehaviour
     [Task]
     public void PickRandomDestination()
     {
+        _tank.Agent.ResetPath();
         Vector3 randomDirection = Random.insideUnitSphere * 20.0f;
-        
+
         //NavmeshHit
         NavMeshHit navMeshHit;
         NavMesh.SamplePosition(randomDirection, out navMeshHit, 20.0f, NavMesh.AllAreas);
-        
-        Vector3 destination = navMeshHit.position;
-        
+
+        destination = navMeshHit.position;
+
         _tank.Agent.SetDestination(destination);
+        
         Task.current.Succeed();
     }
 
@@ -33,6 +36,8 @@ public class LhamasDoForroh : MonoBehaviour
     public void MoveDestination()
     {
         //Raycast para frente do tanque.
+        
+
         RaycastHit hit;
         if (Physics.Raycast(_tank.Position, _tank.transform.forward, out hit, 3f))
         {
@@ -46,7 +51,7 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
-    public bool SeeEnemy()
+    public bool HasTargetInRange()
     {
         return _tank.HasTargetInRange;
     }
@@ -66,17 +71,28 @@ public class LhamasDoForroh : MonoBehaviour
     [Task]
     public void GetDistance()
     {
-        if (!DistanceToShoot(10.0f))
+        // _tank.Agent.Stop();
+        // Vector3 distToEnemy = _tank.Targets[0] - _tank.Position;
+        // Vector3 targetPos = distToEnemy.normalized * -3.0f;
+        // _tank.Agent.destination = targetPos;
+        // _tank.Agent.Resume();
+
+
+
+        if (!DistanceToShoot(15.0f))
         {
-            PickRandomDestination();
+            _tank.Agent.Stop();
+            _tank.Agent.ResetPath();
+            //_tank.Move(-1f);
         }
+
         //Raycast para trás do tanque.
-        RaycastHit hit;
-        if (Physics.Raycast(_tank.Position, -_tank.transform.forward, out hit, 1.0f))
-        {
-            Task.current.Fail();
-        }
-        
+        // RaycastHit hit;
+        // if (Physics.Raycast(_tank.Position, -_tank.transform.forward, out hit, 1.0f))
+        // {
+        //     Task.current.Fail();
+        // }
+
         Task.current.Succeed();
     }
 
@@ -97,19 +113,11 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
-    public void AlignTank()
-    {
-        _tank.LookAt(_tank.Targets[0]);
-        if (ShootLinedUp())
-            Task.current.Succeed();
-    }
-
-    [Task]
     public bool ShootLinedUp()
     {
         float angle = _tank.Angle(_tank.Targets[0]);
         Debug.Log(angle);
-        if (Mathf.Abs(angle) <= 5)
+        if (Mathf.Abs(angle) <= 10)
         {
             return true;
         }
@@ -131,5 +139,17 @@ public class LhamasDoForroh : MonoBehaviour
     {
         _tank.StopFire();
         Task.current.Succeed();
+    }
+
+    private void Update()
+    {
+        if (HasTargetInRange())
+        {
+            //_tank.Agent.Stop();
+            //_tank.Agent.ResetPath();
+            _tank.LookAt(_tank.Targets[0]);
+        }
+
+        Debug.DrawLine(_tank.Position, destination, Color.blue);
     }
 }
