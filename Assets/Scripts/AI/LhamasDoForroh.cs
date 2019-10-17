@@ -93,8 +93,9 @@ public class LhamasDoForroh : MonoBehaviour
     {
         if (HasTargetInRange())
         {
-            var lookRotation = Quaternion.LookRotation((_tank.Targets[0] - _tank.Position).normalized);
-            _tank.transform.rotation = Quaternion.Slerp(_tank.transform.rotation, lookRotation, Time.deltaTime * 2.0f);
+            _tank.LookAt(_tank.Targets[0]);
+            // var lookRotation = Quaternion.LookRotation((_tank.Targets[0] - _tank.Position).normalized);
+            // _tank.transform.rotation = Quaternion.Slerp(_tank.transform.rotation, lookRotation, Time.deltaTime * 2.0f);
         }
     }
 
