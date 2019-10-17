@@ -13,14 +13,12 @@ tree("Patrol")
 tree("Flee")
 	while IsHealthLessThan(50.0)
 		fallback
-			while not HasTargetInRange
-				sequence
-					TakeCover
-					MoveDestination
+			tree("Wander")					
 			while HasTargetInRange
 				fallback
 					while InDanger(15.0)
 						sequence
+							GetSafeDistance
 							Fire
 							
 		
@@ -33,7 +31,8 @@ tree("Wander")
 
 tree("Attack")
 	while HasTargetInRange
-		sequence
+		fallback
 			while not DistanceToShoot(15.0)
 				GetDistance
-			Fire
+			while DistanceToShoot(15.0)
+				Fire
