@@ -16,11 +16,8 @@ tree("Flee")
 			tree("Wander")					
 			while HasTargetInRange
 				fallback
-					while InDanger(15.0)
-						sequence
-							GetSafeDistance
-							Fire
-							
+					while InDanger(5.0, 15.0) 
+						GetSafeDistance
 		
 tree("Wander")
 	while not HasTargetInRange
@@ -32,7 +29,7 @@ tree("Wander")
 tree("Attack")
 	while HasTargetInRange
 		fallback
-			while not DistanceToShoot(15.0)
+			while not DistanceToShoot(16.0)
 				GetDistance
-			while DistanceToShoot(15.0)
+			while DistanceToShoot(16.0)
 				Fire

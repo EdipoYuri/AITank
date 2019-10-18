@@ -1,0 +1,39 @@
+tree("Root")
+	parallel
+		repeat mute tree ("Patrulhar")
+		repeat mute tree ("Atacar")
+		repeat mute tree ("Fugir")
+
+
+tree ("Patrulhar")
+	fallback
+		while ninguem
+			sequence
+				PickRandomDestination
+				MoveDestination
+				Parar
+
+tree ("Atacar")
+	fallback
+		while not ninguem
+			fallback
+				while not doisoumais
+					fallback
+						while NotDanger(3.0)
+							fallback
+								while not Parede (5.0)
+									sequence
+										Atacar
+								fallback
+									while Parede(5.0)
+										sequence
+											Parar
+
+tree("Fugir")
+	fallback
+		while not ninguem
+			fallback
+				while doisoumais
+					sequence
+						TakeCover
+						Parar

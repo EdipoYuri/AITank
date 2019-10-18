@@ -44,12 +44,12 @@ public class LhamasDoForroh : MonoBehaviour {
 
     [Task]
     public void GetDistance () {
-            // _tank.Agent.isStopped = true;
-            // Vector3 disToEnemy = _tank.Targets[0] - _tank.Position;
-            // Vector3 targetPos = disToEnemy.normalized * -3.0f;
-            // _tank.Agent.SetDestination(targetPos);
-        _tank.Move (-1f);
-        
+        // _tank.Agent.isStopped = true;
+        // Vector3 disToEnemy = _tank.Targets[0] - _tank.Position;
+        // Vector3 targetPos = disToEnemy.normalized * -3.0f;
+        // _tank.Agent.SetDestination(targetPos);
+
+        _tank.Move(-1f);
         _tank.Agent.isStopped = false;
         _tank.Agent.ResetPath ();
         Task.current.Succeed ();
@@ -66,16 +66,22 @@ public class LhamasDoForroh : MonoBehaviour {
 
     [Task]
     public void GetSafeDistance(){
-        if(_tank.DistanceToTarget(_tank.Targets[0])<5.0f){
-            _tank.Move(-1f);
-        }else if(_tank.DistanceToTarget(_tank.Targets[0])>14.0f){
-            _tank.Move(1f);
+        _tank.Agent.ResetPath();
+        Fire();
+        _tank.LookAt(_tank.Targets[0]);
+        if (_tank.DistanceToTarget(_tank.Targets[0])<5.0f){
+            _tank.Agent.Move(new Vector3(0, -1f, 0));
+        }
+
+        if (_tank.DistanceToTarget(_tank.Targets[0])>15.0f){
+            _tank.Agent.Move(new Vector3(0, 1f, 0));
         }
     }
 
     [Task]
     public void Fire () {
         _tank.StartFire ();
+        _tank.Move(1f);
         Task.current.Succeed ();
     }
 
@@ -87,7 +93,7 @@ public class LhamasDoForroh : MonoBehaviour {
 
     private void Update () {
         if (HasTargetInRange ()) {
-            _tank.LookAt (_tank.Targets[0]);
+            _tank.TurretLookAt (_tank.Targets[0]);
         }
     }
 
@@ -107,8 +113,8 @@ public class LhamasDoForroh : MonoBehaviour {
     }
 
     [Task]
-    public bool InDanger (float _minDistance) {
-        return _tank.DistanceToTarget (_tank.Targets[0]) < _minDistance;
+    public bool InDanger (float _minDistance, float _maxDistance) {
+        return _tank.DistanceToTarget (_tank.Targets[0]) < _minDistance || _tank.DistanceToTarget(_tank.Targets[0]) > _maxDistance;
     }
 
     [Task]
