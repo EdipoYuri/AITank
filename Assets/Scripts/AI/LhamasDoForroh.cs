@@ -95,6 +95,15 @@ public class LhamasDoForroh : MonoBehaviour {
         if (HasTargetInRange ()) {
             _tank.TurretLookAt (_tank.Targets[0]);
         }
+
+        RaycastHit hit;
+        if(Physics.Raycast(_tank.Position, transform.TransformDirection(Vector3.forward),out hit, 6.0f)){
+            Debug.DrawRay(_tank.Position, transform.TransformDirection(Vector3.forward)* hit.distance, Color.yellow);
+            Debug.Log("Bateu");
+        }else{
+            Debug.DrawRay(_tank.Position, transform.TransformDirection(Vector3.forward)*1000, Color.white);
+            Debug.Log("Não bateu");
+        }
     }
 
     [Task]
