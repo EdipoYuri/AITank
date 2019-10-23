@@ -5005,8 +5005,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114665110371270584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5163,8 +5161,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: ab943d3d5ac38bb448fabe3cdc9516d1, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -5352,8 +5348,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: c7dd97e9cd879304795b366cbf187bfe, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -5383,10 +5377,10 @@ GameObject:
   - component: {fileID: 3586468932249532997}
   - component: {fileID: 2469140487665207861}
   - component: {fileID: 1092922433773994640}
-  - component: {fileID: 7407860296772743327}
-  - component: {fileID: 4439235690690490896}
+  - component: {fileID: 8215872878241011184}
+  - component: {fileID: 3076436497356257186}
   m_Layer: 9
-  m_Name: Rapariga
+  m_Name: Rapariga Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5750,10 +5744,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1448907371205044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec440ad1313213c46a2af9afccecf854, type: 3}
+  m_Script: {fileID: 11500000, guid: ca871f32e6f0d8845ab0b3e3360cbd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7407860296772743327
+--- !u!114 &8215872878241011184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5762,10 +5756,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1448907371205044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9798a248fce2d44185377af62da158d, type: 3}
+  m_Script: {fileID: 11500000, guid: 353e6dff7aab814428655d36f138aff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4439235690690490896
+--- !u!114 &3076436497356257186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5778,7 +5772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scripts:
-  - {fileID: 4900000, guid: 5783dd87a0c88934e85520dc2032d7fc, type: 3}
+  - {fileID: 4900000, guid: 7e488883ac44433459c2915bf2d59113, type: 3}
   autoReset: 1
   tickOn: 0
   sourceInfos:
@@ -5929,8 +5923,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: c7dd97e9cd879304795b366cbf187bfe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -6107,8 +6099,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1908617296413920
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,10 +4,10 @@ public class TankShooting : MonoBehaviour
 {
     public TankType m_Type = TankType.Human;
 
-    public int m_PlayerNumber = 1;
-    public Rigidbody m_Shell;
-    public AudioSource m_ShootingAudio;
-    public AudioClip m_FireClip;
+    public int m_PlayerNumber = 1;       
+    public Rigidbody m_Shell;            
+    public AudioSource m_ShootingAudio;      
+    public AudioClip m_FireClip;     
     public float m_MaxChargeTime = 0.75f;
 
     [SerializeField]
@@ -17,7 +17,7 @@ public class TankShooting : MonoBehaviour
     public Transform m_FireTransform;
     public Transform m_TurretTransform;
 
-    private string m_FireButton;
+    private string m_FireButton;        
     [SerializeField]
     private float m_CurrentLaunchForce = 20.0f;
 
@@ -41,6 +41,17 @@ public class TankShooting : MonoBehaviour
     private void Start()
     {
         m_FireButton = "Fire" + m_PlayerNumber;
+    }
+
+    private void OnEnable()
+    {
+        if (m_TurretTransform) m_TurretTransform.rotation = transform.rotation;
+        StopFiring();
+    }
+
+    private void OnDisable()
+    {
+        StopFiring();
     }
 
     private void Update()
@@ -74,12 +85,19 @@ public class TankShooting : MonoBehaviour
     }
 
     private void Fire()
+    { 
+		Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+
+		shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
+
+		m_ShootingAudio.clip = m_FireClip;
+		m_ShootingAudio.Play();
+    }
+
+    public void FireAndExplode()
     {
         Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-
-        shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
-
-        m_ShootingAudio.clip = m_FireClip;
-        m_ShootingAudio.Play();
+        ShellExplosion shellExplosion = shellInstance.GetComponent<ShellExplosion>();
+        shellExplosion.Explode(15.0f);
     }
 }
