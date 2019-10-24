@@ -1,6 +1,8 @@
 tree("Root")
 	parallel
 		repeat mute tree("Patrol")
+		repeat mute tree("Attack")
+		repeat mute tree("Flee")
 
 tree("Patrol")
 	fallback
@@ -37,7 +39,10 @@ tree("Attack")
 			while not TorretHitSomething
 				fallback
 					while HitSomethingInBack
-						GetCloser
+						random
+							RotateTank(-45.0)
+							RotateTank(45.0)
+							GetCloser
 					while not HitSomethingInBack
 						fallback
 							while not DistanceToShoot(17.0)
@@ -45,4 +50,5 @@ tree("Attack")
 									Fire
 									GetDistance
 							while DistanceToShoot(17.0)
-								Fire
+								sequence
+									Fire

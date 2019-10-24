@@ -14,6 +14,14 @@ public class LhamasDoForroh : MonoBehaviour
         _tank = GetComponent<TankAI>();
     }
 
+    private void Update() {
+        if(HasTargetInRange()){
+            _tank.TurretLookAt(_tank.Targets[0]);
+            _tank.LookAt(_tank.Targets[0]);
+        }
+    }
+
+
     [Task]
     public void PickRandomDestination()
     {
@@ -90,7 +98,7 @@ public class LhamasDoForroh : MonoBehaviour
 
     [Task]
     public void GetCloser(){
-        _tank.Move(1f);
+        _tank.Move(3f);
         Task.current.Succeed();
     }
 
@@ -112,12 +120,10 @@ public class LhamasDoForroh : MonoBehaviour
         Task.current.Succeed();
     }
 
-    private void Update()
-    {
-        if (HasTargetInRange())
-        {
-            _tank.TurretLookAt(_tank.Targets[0]);
-        }
+    [Task]
+    public void LookAtTarget(){
+        _tank.TurretLookAt(_tank.Targets[0]);
+        Task.current.Succeed();
     }
 
     [Task]
@@ -151,10 +157,16 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
+    public void RotateTank(float angle){
+        _tank.Rotate(angle);
+        Task.current.Succeed();
+    }
+
+    [Task]
     public bool ShootLinedUp()
     {
         float angle = _tank.Angle(_tank.Targets[0]);
-        if (Mathf.Abs(angle) <= 10)
+        if (Mathf.Abs(angle) <= 5)
         {
             return true;
         }
