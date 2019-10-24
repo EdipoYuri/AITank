@@ -14,8 +14,10 @@ public class LhamasDoForroh : MonoBehaviour
         _tank = GetComponent<TankAI>();
     }
 
-    private void Update() {
-        if(HasTargetInRange()){
+    private void Update()
+    {
+        if (HasTargetInRange())
+        {
             _tank.TurretLookAt(_tank.Targets[0]);
             _tank.LookAt(_tank.Targets[0]);
         }
@@ -48,23 +50,14 @@ public class LhamasDoForroh : MonoBehaviour
     [Task]
     public void MoveDestination()
     {
-        //Arrived at destinantion
         if (_tank.Agent.remainingDistance <= _tank.Agent.stoppingDistance && !_tank.Agent.pathPending)
-        {
             Task.current.Succeed();
-        }
     }
 
     [Task]
     public void GetDistance()
     {
-        // _tank.Agent.isStopped = true;
-        // Vector3 disToEnemy = _tank.Targets[0] - _tank.Position;
-        // Vector3 targetPos = disToEnemy.normalized * -3.0f;
-        // _tank.Agent.SetDestination(targetPos);
-
         _tank.Move(-1f);
-        // _tank.Agent.isStopped = false;
         _tank.Agent.ResetPath();
         Task.current.Succeed();
     }
@@ -80,11 +73,28 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
+    public void GetEnemyPosition()
+    {
+        _tank.Agent.ResetPath();
+        _tank.Agent.SetDestination(_tank.Targets[0]);
+        Task.current.Succeed();
+    }
+
+    [Task]
+    public void Explosion()
+    {
+        _tank.SelfDestruction();
+        Task.current.Succeed();
+    }
+
+    [Task]
     public void GetSafeDistance()
     {
         _tank.Agent.ResetPath();
-        Fire();
         _tank.LookAt(_tank.Targets[0]);
+
+        Fire();
+
         if (_tank.DistanceToTarget(_tank.Targets[0]) < 5.0f)
         {
             _tank.Agent.Move(new Vector3(0, -1f, 0));
@@ -97,17 +107,22 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
-    public void GetCloser(){
-        _tank.Move(3f);
+    public void GetCloser()
+    {
+        _tank.Move(3.0f);
         Task.current.Succeed();
     }
 
     [Task]
-    public void Fire(){
-        if(!HitSomethingInFront()){
+    public void Fire()
+    {
+        if (!HitSomethingInFront())
+        {
             _tank.StartFire();
             Task.current.Succeed();
-        }else{
+        }
+        else
+        {
             _tank.StopFire();
             Task.current.Fail();
         }
@@ -121,7 +136,8 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
-    public void LookAtTarget(){
+    public void LookAtTarget()
+    {
         _tank.TurretLookAt(_tank.Targets[0]);
         Task.current.Succeed();
     }
@@ -152,12 +168,23 @@ public class LhamasDoForroh : MonoBehaviour
         //RaycastHit hit;
         int layer = LayerMask.GetMask("Obstacles");
         Ray ray = new Ray(_tank.Position, _tank.TurretDirection);
-        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 15.0f, Color.yellow);
-        return Physics.Raycast(ray, 15.0f, layer);
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 6.0f, Color.yellow);
+        return Physics.Raycast(ray, 6.0f, layer);
     }
 
     [Task]
-    public void RotateTank(float angle){
+    public bool TankHitEnemy()
+    {
+        //RaycastHit hit;
+        int layer = LayerMask.GetMask("Players");
+        Ray ray = new Ray(_tank.Position, transform.forward);
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 6.0f, Color.yellow);
+        return Physics.Raycast(ray, 3.0f, layer);
+    }
+
+    [Task]
+    public void RotateTank(float angle)
+    {
         _tank.Rotate(angle);
         Task.current.Succeed();
     }

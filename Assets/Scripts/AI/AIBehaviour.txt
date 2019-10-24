@@ -3,6 +3,7 @@ tree("Root")
 		repeat mute tree("Patrol")
 		repeat mute tree("Attack")
 		repeat mute tree("Flee")
+		repeat mute tree("AutoDestruction")
 
 tree("Patrol")
 	fallback
@@ -12,6 +13,15 @@ tree("Patrol")
 				tree("Attack")
 				tree("Wander")
 
+tree("AutoDestruction")
+	fallback		
+		while IsHealthLessThan(20.0)
+			sequence
+				GetEnemyPosition
+				MoveDestination
+				while TankHitEnemy
+					Explosion
+
 tree("Flee")
 	while IsHealthLessThan(50.0)
 		fallback
@@ -20,7 +30,7 @@ tree("Flee")
 				fallback
 					while InDanger(5.0, 15.0) 
 						GetSafeDistance
-		
+								
 tree("Wander")
 	while not HasTargetInRange
 		sequence
