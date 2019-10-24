@@ -16,11 +16,13 @@ tree("Patrol")
 tree("AutoDestruction")
 	fallback		
 		while IsHealthLessThan(20.0)
-			sequence
-				GetEnemyPosition
-				MoveDestination
-				while TankHitEnemy
-					Explosion
+			fallback
+				while HasTargetInRange
+					sequence
+						GetEnemyPosition
+						MoveDestination
+						while TankHitEnemy
+							Explosion
 
 tree("Flee")
 	while IsHealthLessThan(50.0)
