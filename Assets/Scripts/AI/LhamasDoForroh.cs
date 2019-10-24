@@ -56,7 +56,7 @@ public class LhamasDoForroh : MonoBehaviour
         // _tank.Agent.SetDestination(targetPos);
 
         _tank.Move(-1f);
-        _tank.Agent.isStopped = false;
+        // _tank.Agent.isStopped = false;
         _tank.Agent.ResetPath();
         Task.current.Succeed();
     }
@@ -89,11 +89,20 @@ public class LhamasDoForroh : MonoBehaviour
     }
 
     [Task]
-    public void Fire()
-    {
-        _tank.StartFire();
+    public void GetCloser(){
         _tank.Move(1f);
         Task.current.Succeed();
+    }
+
+    [Task]
+    public void Fire(){
+        if(!HitSomethingInFront()){
+            _tank.StartFire();
+            Task.current.Succeed();
+        }else{
+            _tank.StopFire();
+            Task.current.Fail();
+        }
     }
 
     [Task]
@@ -109,43 +118,6 @@ public class LhamasDoForroh : MonoBehaviour
         {
             _tank.TurretLookAt(_tank.Targets[0]);
         }
-
-        if (HitSomethingInFront())
-            Debug.Log("Hitou");
-        else
-        {
-            Debug.Log("nothing happens feijoada");
-        }
-
-        if (HitSomethingInBack())
-            Debug.Log("Hitou");
-        else
-        {
-            Debug.Log("nothing happens feijoada");
-        }
-        if (TorretHitSomething())
-            Debug.Log("Hitou");
-        else
-        {
-            Debug.Log("nothing happens feijoada");
-        }
-        // RaycastHit hit;
-        // //Frente (Layer 10: Obstacles)
-        // if (Physics.Raycast(_tank.Position, transform.TransformDirection(Vector3.forward), out hit, 8.0f, 10))
-        //     Debug.DrawRay(_tank.Position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-        // else
-        //     Debug.DrawRay(_tank.Position, transform.TransformDirection(Vector3.forward) * 100, Color.white);
-        // //Tras (Layer 10: Obstacles)
-        // if (Physics.Raycast(_tank.Position, transform.TransformDirection(-Vector3.forward), out hit, 8.0f, 10))
-        //     Debug.DrawRay(_tank.Position, transform.TransformDirection(-Vector3.forward) * hit.distance, Color.yellow);
-        // else
-        //     Debug.DrawRay(_tank.Position, transform.TransformDirection(-Vector3.forward) * 100, Color.white);
-        // //Torreta (Layer 9: Player)
-        // if (Physics.Raycast(_tank.TurretDirection, transform.TransformDirection(Vector3.forward), out hit, 10.0f, 9))
-        //     Debug.DrawRay(_tank.TurretDirection, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-        // else
-        //     Debug.DrawRay(_tank.TurretDirection, transform.TransformDirection(Vector3.forward) * 100, Color.white);
-
     }
 
     [Task]
@@ -172,10 +144,10 @@ public class LhamasDoForroh : MonoBehaviour
     public bool TorretHitSomething()
     {
         //RaycastHit hit;
-        int layer = LayerMask.GetMask("Players");
+        int layer = LayerMask.GetMask("Obstacles");
         Ray ray = new Ray(_tank.Position, _tank.TurretDirection);
         Debug.DrawLine(ray.origin, ray.origin + ray.direction * 15.0f, Color.yellow);
-        return Physics.Raycast(ray, 6.0f, layer);
+        return Physics.Raycast(ray, 15.0f, layer);
     }
 
     [Task]

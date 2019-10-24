@@ -350,7 +350,7 @@ MonoBehaviour:
   - {fileID: 1448907371205044, guid: 3eff0488aed7c654b943187a5b4a9cbe, type: 3}
   - {fileID: 1448907371205044, guid: af4ad2e089a3f1449ad98a501dac27fc, type: 3}
   m_Tanks:
-  - m_PlayerColor: {r: 0.16470589, g: 0.39215687, b: 0.69803923, a: 0}
+  - m_PlayerColor: {r: 1, g: 0, b: 0.64433, a: 0}
     m_SpawnPoint: {x: 0, y: 0, z: 0}
     m_PlayerNumber: 0
     m_ColoredPlayerText: 
@@ -850,6 +850,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3d7fe0a26ba72d949874021dc3d6995e, type: 3}
     m_FontSize: 14
