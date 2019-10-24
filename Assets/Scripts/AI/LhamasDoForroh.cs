@@ -57,7 +57,7 @@ public class LhamasDoForroh : MonoBehaviour
     [Task]
     public void GetDistance()
     {
-        _tank.Move(-1f);
+        _tank.Move(-0.25f);
         _tank.Agent.ResetPath();
         Task.current.Succeed();
     }
@@ -97,12 +97,12 @@ public class LhamasDoForroh : MonoBehaviour
 
         if (_tank.DistanceToTarget(_tank.Targets[0]) < 5.0f)
         {
-            _tank.Agent.Move(new Vector3(0, -1f, 0));
+            _tank.Agent.Move(new Vector3(0, -0.25f, 0));
         }
 
         if (_tank.DistanceToTarget(_tank.Targets[0]) > 15.0f)
         {
-            _tank.Agent.Move(new Vector3(0, 1f, 0));
+            _tank.Agent.Move(new Vector3(0, 0.25f, 0));
         }
     }
 
